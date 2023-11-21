@@ -21,18 +21,16 @@ class ReviewController {
             .catch(next);
     }
 
-    // POST /:id
+    // POST /
     review(req, res, next) {
-        const data = Object.assign({userId: req.params.id}, req.body);
-
         // validation
-        console.log(data)
+        
         const newReview = new Review(
-            data
+            req.body
         )
         newReview.save();
 
-        res.status(200).json(data);
+        return res.status(200).json(data);
     }
 }
 
