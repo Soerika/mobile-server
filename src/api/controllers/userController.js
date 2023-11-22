@@ -18,7 +18,12 @@ class UserController {
     // GET /:id
     show(req, res, next) {
         User.findById(req.params.id)
-            .then(user => res.status(200).json(user))
+            .then(user => {
+                user = user.toObject();
+                delete user.password;
+                console.log(user);
+                return res.status(200).json(user)
+            })
             .catch(next);
     }
 }

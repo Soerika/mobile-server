@@ -10,15 +10,15 @@ class AppointmentController {
 
     // GET users/:id
     indexUser(req, res, next) {
+        User.findById(req.params.id).then((user) => {
+            userName = user.firstName
+        })
+
         const userId = req.params.id;
-
-        user.findById(userId).then(user => userName = user.firstName);
-
         Appointment.find({ userId: { _id:userId }} ).limit(10)
             .then(appointments => {
-                appointments.forEach((node) => {
-                    node.userName = res.locals.userName
-                    node.doctorName = res.locals.doctorName
+                appointments.forEach(ele => {
+                    console.log(res.locals.userName)
                 })
                 res.status(200).json(appointments)
             })
@@ -27,9 +27,16 @@ class AppointmentController {
 
     // GET doctors/:id
     indexDoctor(req, res, next) {
+        Doctor.findById(req.params.id).then((doctor) => {
+            if(doctor) {
+                 res.locals.doctorName = doctor.firstName
+            }
+         });
+
         const userId = req.params.id;
         Appointment.find({ doctorId: { _id:userId }} ).limit(10)
             .then(appointments => {
+                console.log(res.locals.doctorName)
                 appointments.forEach((node) => {
                     node.userName = res.body.firstName
                     node.doctorName = res.body.doctorName

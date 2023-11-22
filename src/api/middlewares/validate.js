@@ -11,28 +11,23 @@ function validateAppointmentData(req, res, next) {
         })
     }
 
-    User.findById(req.body.userId).then((user) => {
-        if(!user) {
-            return res.status(400).json({
-                msg: "no user found"
-            });
-        }
+    next()
+}
 
+function getAdditionalData(req, res, next) {
+    User.findById(req.params.id).then((user) => {
         res.locals.userName = user.firstName
-    });
+    })
 
-    Doctor.findById(req.body.doctorId).then((doctor) => {
-       if(!doctor) {
-        return res.status(400).json({
-            msg: "no doctor found"
-        });
+    Doctor.findById(req.params.id).then((doctor) => {
+       if(doctor) {
+            res.locals.doctorName = doctor.firstName
        }
-       res.locals.doctorName = doctor.firstName
     });
-
     next()
 }
 
 module.exports = {
+    getAdditionalData,
     validateAppointmentData
 }

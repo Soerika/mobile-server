@@ -31,7 +31,7 @@ class userAuthController {
                 }
                 const accessToken = jwt.sign(userInfo, accessTokenSecret);
                 // return res.status(200).json({ accessToken: accessToken });
-                return res.status(200).json({_id: user._id});
+                return res.status(200).json({ ...userInfo});
             }
 
             else if(doctor) {
@@ -44,7 +44,7 @@ class userAuthController {
 
                 const accessToken = jwt.sign(doctorInfo, accessTokenSecret);
                 // return res.status(200).json({ accessToken: accessToken });
-                return res.status(200).json({_id: doctor._id});
+                return res.status(200).json({...userInfo});
             }
 
             return res.status(404).json({
@@ -84,7 +84,8 @@ class userAuthController {
                 }
                 
                 const accessToken = jwt.sign(userInfo, accessTokenSecret);
-                res.status(200).json({ accessToken: accessToken });
+                // res.status(200).json({ accessToken: accessToken });
+                return res.status(200).json({...userInfo});
             } else {
                 res.status(400).json({ message: "user exist" });
             }

@@ -3,7 +3,7 @@ const router = express.Router();
 
 const appointmentController = require('../controllers/appointmentController');
 const { authenticateToken } = require('../middlewares/authenticate');
-const { validateAppointmentData } = require('../middlewares/validate');
+const { validateAppointmentData, getAdditionalData } = require('../middlewares/validate');
 
 /**
  * @swagger
@@ -32,7 +32,7 @@ router.get('/search', appointmentController.search);
  *         content:
  *           application/json:
  */
-router.get('/users/:id',validateAppointmentData, appointmentController.indexUser);
+router.get('/users/:id', appointmentController.indexUser);
 
 /**
  * @swagger
